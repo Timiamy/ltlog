@@ -4,12 +4,32 @@
 #include <ctime>
 #include <sstream>
 #include <string>
+#include <string_view>
 #include <iomanip>
+
 
 namespace Ltlog {
 using TimePoint = std::chrono::_V2::system_clock::time_point;
 
+
+
+enum class LogLevel: uint8_t
+{
+    kLogDebug = 0,
+    kLogInfo = 1,
+    kLogWarning = 2,
+    kLogError = 3,
+    kLogCritical = 4,
+    kLogLevelMax
+};
+
+static constexpr std::array<std::string_view, static_cast<std::underlying_type_t<LogLevel>>(LogLevel::kLogLevelMax)> kLogLevelStr = 
+{
+    "Debug","Info","Warning","Error","Critical"
+};
+
 struct LogContent {
+    LogLevel level;
     pid_t pid;
     int line;
     TimePoint time;
@@ -31,7 +51,9 @@ struct LogContent {
                   << std::setw(3) << std::setfill('0') << time_millis;
 
         ss << " [" << pid << "] ";
-        ss << filename << ":" << line << " ";
+        ss << filename << ":" << line;
+        ss << " [" << kLogLevelStr[static_cast<std::underlying_type_t<LogLevel>>(level)] << "] ";
+
         ss << message << std::endl;
 
         return ss.str();

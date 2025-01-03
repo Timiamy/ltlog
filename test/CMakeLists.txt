@@ -1,0 +1,5 @@
+
+add_executable(500logs_per_thread 500logs_per_thread.cpp)
+add_executable(5000logs_per_thread 5000logs_per_thread.cpp)
+add_executable(50000logs_per_thread 50000logs_per_thread.cpp)
+add_executable(500000logs_per_thread 500000logs_per_thread.cpp)
