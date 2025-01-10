@@ -21,7 +21,7 @@ class SpinLock {
         last_state_ = expected;
         int times = 0;
         while (!state_.compare_exchange_weak(
-            expected, desired, std::memory_order::memory_order_acquire)) 
+            expected, desired, std::memory_order_acquire)) 
         {
             expected = last_state_;
             if (++times > 10) {

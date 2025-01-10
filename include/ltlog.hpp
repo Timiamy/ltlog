@@ -51,7 +51,7 @@ class LtLogger {
         : is_exit_(false),
           write_file_thread_([this]() { this->WriteLogProc(); }) {
         std::string log_path = !log_path_.empty() ? log_path_: kLogFilePath;
-        std::filesystem::path log_file_path(log_path_);
+        std::filesystem::path log_file_path(log_path);
         if (!std::filesystem::exists(log_file_path)) {
             if (!std::filesystem::exists(log_file_path.parent_path())) {
                 if (!std::filesystem::create_directories(
