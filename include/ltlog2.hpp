@@ -68,23 +68,18 @@ class LtLogger {
     }
 
     void WriteLogProc() {
-        int sleep_nano = 1;
         while (true) {
             auto log_content = queue_.Pop();
             if (log_content.has_value()) {
                 ring_.Write(log_content.value().format());
-                sleep_nano = sleep_nano <= 1 ? sleep_nano : sleep_nano / 2;
             }
             else 
             {
                 if (unlikely(is_exit_.load(std::memory_order_relaxed))) {
                     return;
                 }
-                sleep_nano = sleep_nano > kMaxWaitingNanoSecond ? sleep_nano
-                                                               : sleep_nano * 2;
+                std::this_thread::yield();
             }
-
-            //NanoSleep(sleep_nano);
         }
     }
 

@@ -11,18 +11,18 @@ A light, high performance, lock free file logger.
 using std::iostream,  
 | t(threads)             | Add to Queue   | Add to File    |
 |------------------------|----------------|----------------|
-| 24t * 500 logs/t       | 10 ms          | 820 ms         |
-| 24t * 5000 logs/t      | 43 ms          | 8363 ms        |
-| 24t * 50000 logs/t     | 483 ms         | 74826 ms       |
-| 24t * 500000 logs/t    | 2563 ms        | 763619 ms      |
+| 24t * 500 logs/t       | 6 ms           | 22 ms          |
+| 24t * 5000 logs/t      | 31 ms          | 190 ms         |
+| 24t * 50000 logs/t     | 267 ms         | 1825 ms        |
+| 24t * 500000 logs/t    | 2721 ms        | 18578 ms       |
 
 using io_uring,  
 | t(threads)             | Add to Queue   | Add to File    |
 |------------------------|----------------|----------------|
-| 24t * 500 logs/t       | 13 ms          | 38 ms          |
-| 24t * 5000 logs/t      | 76 ms          | 343 ms         |
-| 24t * 50000 logs/t     | 777 ms         | 5887 ms        |
-| 24t * 500000 logs/t    | 2563 ms        | 57039 ms       |
+| 24t * 500 logs/t       | 6 ms           | 29 ms          |
+| 24t * 5000 logs/t      | 29 ms          | 285 ms         |
+| 24t * 50000 logs/t     | 281 ms         | 2648 ms        |
+| 24t * 500000 logs/t    | 2960 ms        | 49065 ms       |
 
 CPU: 12th Gen Intel(R) Core(TM) i9-12900K  
 Memory: 16.0GB  
