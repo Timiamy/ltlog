@@ -3,7 +3,7 @@
 #include <thread>
 #include <Utils.hpp>
 
-namespace Ltlog {
+namespace ltlog {
 
 template <class T>
 class SpinLock {
@@ -39,4 +39,4 @@ class SpinLock {
     T last_state_;
     std::atomic<T> state_;
 };
-}  // namespace Ltlog
+}  // namespace ltlog

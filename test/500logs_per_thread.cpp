@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ltlog.hpp>
+#include <ltlog2.hpp>
 #include <vector>
 #include <cstdint>
 #include <iostream>
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
 
     //Do NOT call destructor youself, I just want to calculate the time cost!
     //This will be a coredump after the main, because of the double free, but forget it because we just want know the cost time.
-    Ltlog::LtLogger::GetInstance().~LtLogger();
+    ltlog::LtLogger::GetInstance().~LtLogger();
 
     auto end2 = std::chrono::system_clock::now();
 

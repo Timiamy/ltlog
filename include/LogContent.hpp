@@ -6,9 +6,10 @@
 #include <string>
 #include <string_view>
 #include <iomanip>
+#include <array>
 
 
-namespace Ltlog {
+namespace ltlog {
 using TimePoint = std::chrono::_V2::system_clock::time_point;
 
 
@@ -60,4 +61,4 @@ struct LogContent {
     }
 };
 
-};  // namespace Ltlog
+};  // namespace ltlog

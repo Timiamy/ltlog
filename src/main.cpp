@@ -1,4 +1,4 @@
-#include <ltlog.hpp>
+#include <ltlog2.hpp>
 
 int main(int argc, char const *argv[])
 {

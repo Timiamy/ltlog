@@ -3,7 +3,7 @@
 #include <thread>
 #include <unistd.h>
 
-namespace Ltlog {
+namespace ltlog {
 using TimePoint = std::chrono::_V2::system_clock::time_point;
 
 #define unlikely(x) __builtin_expect(!!(x), 0)
@@ -22,4 +22,4 @@ inline TimePoint GetTimePoint()
     return std::chrono::system_clock::now();
 }
 
-}  // namespace Ltlog
+}  // namespace ltlog

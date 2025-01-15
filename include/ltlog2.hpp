@@ -10,8 +10,12 @@
 #include <mutex>
 #include <memory>
 #include <config.hpp>
+#include <IOURing.hpp>
 
 namespace ltlog {
+
+static constexpr auto kURingEntries = 1024;
+static constexpr auto kURingEntrySize = 256;
 
 class LtLogger {
    public:
@@ -48,7 +52,7 @@ class LtLogger {
     }
    private:
     LtLogger()
-        : is_exit_(false),
+        : is_exit_(false), ring_(!log_path_.empty() ? log_path_: kLogFilePath),
           write_file_thread_([this]() { this->WriteLogProc(); }) {
         std::string log_path = !log_path_.empty() ? log_path_: kLogFilePath;
         std::filesystem::path log_file_path(log_path);
@@ -61,8 +65,6 @@ class LtLogger {
                 }
             }
         }
-
-        ofstream_.open(log_file_path, std::ios::app | std::ios::out);
     }
 
     void WriteLogProc() {
@@ -70,27 +72,27 @@ class LtLogger {
         while (true) {
             auto log_content = queue_.Pop();
             if (log_content.has_value()) {
-                ofstream_ << log_content.value().format();
+                ring_.Write(log_content.value().format());
                 sleep_nano = sleep_nano <= 1 ? sleep_nano : sleep_nano / 2;
-            } else {
+            }
+            else 
+            {
                 if (unlikely(is_exit_.load(std::memory_order_relaxed))) {
-                    ofstream_.flush();
-                    ofstream_.close();
                     return;
                 }
                 sleep_nano = sleep_nano > kMaxWaitingNanoSecond ? sleep_nano
                                                                : sleep_nano * 2;
             }
 
-            NanoSleep(sleep_nano);
+            //NanoSleep(sleep_nano);
         }
     }
 
     std::atomic<bool> is_exit_;
-    
-    std::ofstream ofstream_;
+    IOURing<kURingEntries, kURingEntrySize> ring_;
     std::thread write_file_thread_;
     CocurrentQueue<LogContent> queue_;
+
     static std::string log_path_;
     static std::once_flag once_flag_;
     static std::unique_ptr<LtLogger> instance_; 

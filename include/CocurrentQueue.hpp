@@ -5,7 +5,7 @@
 #include <condition_variable>
 #include <optional>
 
-namespace Ltlog {
+namespace ltlog {
 enum QueueState : uint8_t { kQueueIdel, kQueuePush, kQueuePop };
 
 template <typename T>
@@ -40,4 +40,4 @@ class CocurrentQueue {
     SpinLock<QueueState> spin_lock_;
     std::queue<T> queue_;
 };
-}  // namespace Ltlog
+}  // namespace ltlog
